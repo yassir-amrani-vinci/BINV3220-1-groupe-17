@@ -99,6 +99,23 @@ body {
   border-radius: 6px;
 }
 
+.filter-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  max-width: 24rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.filter-field select {
+  padding: 0.5rem 0.75rem;
+  font: inherit;
+  font-weight: 400;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+}
+
 .result-count {
   margin: 0 0 0.5rem;
   color: #4b5563;

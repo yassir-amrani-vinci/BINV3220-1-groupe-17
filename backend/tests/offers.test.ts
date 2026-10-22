@@ -35,6 +35,13 @@ describe("GET /offers : accès", () => {
 });
 
 describe("GET /offers : visibilité selon le profil", () => {
+  it.each(["P3", "p1", "P1&P2"])("refuse une période invalide (%s)", async (period) => {
+    const response = await listOffersAs("ADMIN", ADMINISTRATOR.ANNE_LECLERCQ).query({ period });
+
+    expect(response.status).toBe(400);
+    expect(response.body.error.code).toBe("INVALID_QUERY");
+  });
+
   it("montre toutes les offres à un administrateur, de la plus récente année à la plus ancienne", async () => {
     const response = await listOffersAs("ADMIN", ADMINISTRATOR.ANNE_LECLERCQ);
 
@@ -60,6 +67,25 @@ describe("GET /offers : visibilité selon le profil", () => {
       OFFER.BILLING_API,
     ]);
     expect(response.body.every((o: { status: string }) => o.status === "PUBLISHED")).toBe(true);
+  });
+
+  it("filtre les offres par période sans modifier leur visibilité", async () => {
+    const response = await listOffersAs("STUDENT", STUDENT.LUCAS_DUPONT).query({ period: "P2" });
+
+    expect(response.status).toBe(200);
+    expect(offerIds(response.body)).toEqual([
+      OFFER.INTERNAL_CHATBOT,
+      OFFER.DATA_QUALITY,
+      OFFER.FLEET_APP,
+      OFFER.BILLING_API,
+    ]);
+    expect(response.body.every((offer: { period: string }) => offer.period === "P2")).toBe(true);
+
+    const otherPeriod = await listOffersAs("STUDENT", STUDENT.LUCAS_DUPONT).query({
+      period: "OTHER",
+    });
+    expect(otherPeriod.status).toBe(200);
+    expect(otherPeriod.body).toEqual([]);
   });
 
   it("montre à un déposant toutes ses offres, quel que soit leur statut", async () => {
