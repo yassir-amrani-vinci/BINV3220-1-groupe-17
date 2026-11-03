@@ -33,6 +33,8 @@ Toute erreur a la même forme :
 | 403 | `FORBIDDEN` | Utilisateur connecté, mais sans droit sur la ressource |
 | 404 | `NOT_FOUND` | Route inconnue |
 | 500 | `INTERNAL_ERROR` | Erreur inattendue du serveur |
+| 409 | `DUPLICATE_APPLICATION` | Une candidature active existe déjà pour cette offre |
+| 409 | `APPLICATION_PROCESSED` | Une candidature déjà traitée ne peut plus être retirée |
 
 ## GET /health
 
@@ -171,3 +173,44 @@ récente à la plus ancienne, puis de la plus récente à la plus ancienne.
 - `401` `UNAUTHENTICATED` : session absente ou invalide.
 - `403` `FORBIDDEN` : contact seulement promoteur ou signataire.
 - `400` `INVALID_QUERY` : `period` est répété ou ne vaut pas `P1`, `P2` ou `OTHER`.
+
+## GET /applications
+
+Retourne les candidatures de l'étudiant connecté, y compris les candidatures retirées.
+
+- `200` : tableau de candidatures
+- `401` `UNAUTHENTICATED` : session absente ou invalide
+- `403` `FORBIDDEN` : l'utilisateur n'est pas un étudiant
+
+## POST /applications
+
+Crée une candidature pour l'étudiant connecté.
+
+### Requête
+
+```json
+{ "offerId": 1, "message": "Message facultatif" }
+```
+
+`message` peut être absent, nul ou vide. Une seule candidature active est autorisée
+pour un étudiant et une offre ; une nouvelle candidature est possible après un retrait.
+
+### Réponses
+
+- `201` : candidature créée, au statut `IN_PROGRESS`
+- `400` `INVALID_BODY` : corps ou identifiant d'offre invalide
+- `400` `INVALID_APPLICATION` : l'offre n'est pas publiée
+- `401` `UNAUTHENTICATED` : session absente ou invalide
+- `403` `FORBIDDEN` : l'utilisateur n'est pas un étudiant
+- `409` `DUPLICATE_APPLICATION` : candidature active déjà existante
+
+## POST /applications/:id/withdraw
+
+Retire une candidature encore `IN_PROGRESS` sans supprimer son historique.
+
+- `200` : candidature au statut `WITHDRAWN`
+- `400` `INVALID_QUERY` : identifiant invalide
+- `401` `UNAUTHENTICATED` : session absente ou invalide
+- `403` `FORBIDDEN` : l'utilisateur n'est pas un étudiant
+- `404` `NOT_FOUND` : candidature absente ou appartenant à un autre étudiant
+- `409` `APPLICATION_PROCESSED` : candidature déjà `SELECTED`, `REJECTED` ou `WITHDRAWN`
