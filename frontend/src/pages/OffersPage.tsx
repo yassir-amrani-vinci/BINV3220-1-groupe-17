@@ -4,7 +4,8 @@ import ErrorState from "../components/ErrorState.tsx";
 import LoadingState from "../components/LoadingState.tsx";
 import OfferTable from "../components/OfferTable.tsx";
 import { useOffers } from "../hooks/useOffers.ts";
-import type { PeriodCode } from "../models/offer.ts";
+import { useApplications } from "../hooks/useApplications.ts";
+import type { Offer, PeriodCode } from "../models/offer.ts";
 import type { User } from "../models/user.ts";
 
 interface OffersPageProps {
@@ -29,6 +30,13 @@ const PERIOD_OPTIONS: { value: PeriodCode | ""; label: string }[] = [
 const OffersPage = ({ user, token, onUnauthorized }: OffersPageProps) => {
   const [period, setPeriod] = useState<PeriodCode | "">("");
   const { offers, isLoading, error } = useOffers(token, period || undefined, onUnauthorized);
+  const { applications, error: applicationError, apply } = useApplications(
+    token,
+    onUnauthorized,
+    user.kind === "STUDENT",
+  );
+  const [selectedOffer, setSelectedOffer] = useState<Offer | null>(null);
+  const [message, setMessage] = useState("");
 
   const renderContent = () => {
     if (error) return <ErrorState message={error} />;
@@ -39,7 +47,35 @@ const OffersPage = ({ user, token, onUnauthorized }: OffersPageProps) => {
         <p className="result-count">
           {offers.length} offre{offers.length > 1 ? "s" : ""}
         </p>
-        <OfferTable offers={offers} />
+        <OfferTable
+          offers={offers}
+          applications={applications}
+          onApply={user.kind === "STUDENT" ? setSelectedOffer : undefined}
+        />
+        {selectedOffer && (
+          <form
+            onSubmit={async (event) => {
+              event.preventDefault();
+              if (await apply(selectedOffer.id, message)) {
+                setSelectedOffer(null);
+                setMessage("");
+              }
+            }}
+          >
+            <h2>Candidater à « {selectedOffer.title} »</h2>
+            <label htmlFor="application-message">Message facultatif</label>
+            <textarea
+              id="application-message"
+              value={message}
+              onChange={(event) => setMessage(event.target.value)}
+            />
+            {applicationError && <p role="alert">{applicationError}</p>}
+            <button type="submit">Envoyer la candidature</button>
+            <button type="button" onClick={() => setSelectedOffer(null)}>
+              Annuler
+            </button>
+          </form>
+        )}
       </>
     );
   };

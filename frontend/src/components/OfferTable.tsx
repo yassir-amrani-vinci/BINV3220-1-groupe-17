@@ -1,12 +1,15 @@
 import type { Offer } from "../models/offer.ts";
+import type { Application } from "../models/application.ts";
 import { OFFER_STATUS_LABELS, OFFER_STATUS_TONES, PERIOD_LABELS } from "../utils/labels.ts";
 import StatusBadge from "./StatusBadge.tsx";
 
 interface OfferTableProps {
   offers: Offer[];
+  applications?: Application[];
+  onApply?: (offer: Offer) => void;
 }
 
-const OfferTable = ({ offers }: OfferTableProps) => (
+const OfferTable = ({ offers, applications = [], onApply }: OfferTableProps) => (
   <div className="table-wrapper">
     <table className="data-table">
       <thead>
@@ -16,6 +19,7 @@ const OfferTable = ({ offers }: OfferTableProps) => (
           <th scope="col">Année</th>
           <th scope="col">Période</th>
           <th scope="col">Statut</th>
+          {onApply && <th scope="col">Action</th>}
         </tr>
       </thead>
       <tbody>
@@ -31,6 +35,20 @@ const OfferTable = ({ offers }: OfferTableProps) => (
                 tone={OFFER_STATUS_TONES[offer.status]}
               />
             </td>
+            {onApply && (
+              <td>
+                {applications.some(
+                  (application) =>
+                    application.offerId === offer.id && application.status !== "WITHDRAWN",
+                ) ? (
+                  "Candidature envoyée"
+                ) : (
+                  <button type="button" onClick={() => onApply(offer)}>
+                    Candidater
+                  </button>
+                )}
+              </td>
+            )}
           </tr>
         ))}
       </tbody>
