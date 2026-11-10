@@ -42,19 +42,18 @@ candidatures.
 
 ## Crédits d'IA
 
-Les chiffres ne sont pas inventés. Chaque membre du groupe doit compléter le tableau
-avec sa statistique GitHub Copilot réelle avant la soumission du devoir.
+Les chiffres ci-dessous ont été fournis par les membres du groupe à partir de leurs
+statistiques disponibles. Ibrahim n'avait pas accès à GitHub Copilot.
 
 | Membre | Crédit/utilisation Copilot | Source et date de consultation |
 |---|---:|---|
-| Membre 1 | À compléter | Statistiques GitHub Copilot |
-| Membre 2 | À compléter | Statistiques GitHub Copilot |
-| Membre 3 | À compléter | Statistiques GitHub Copilot |
+| Amrani Yassir | 38 crédits | Statistiques GitHub Copilot, 10/11/2026 |
+| Anas Azaizaoui | 16,2 crédits | Statistiques GitHub Copilot, 10/11/2026 |
+| Ibrahim Yahia | 0 crédit — pas d'accès à GitHub Copilot | Déclaration du membre, 10/11/2026 |
 
 ## Points restant à faire avant la soumission
 
-1. Remplacer les trois valeurs « À compléter » par les statistiques réelles.
-2. Vérifier la checklist de la PR et demander la review du collègue.
-3. Poster dans le devoir le lien de la PR ouverte vers `main`.
-4. Effectuer, si possible, un parcours manuel dans le navigateur et l'ajouter à la
+1. Vérifier la checklist de la PR et demander la review du collègue.
+2. Poster dans le devoir le lien de la PR ouverte vers `main`.
+3. Effectuer, si possible, un parcours manuel dans le navigateur et l'ajouter à la
    description ou aux commentaires de la PR.
