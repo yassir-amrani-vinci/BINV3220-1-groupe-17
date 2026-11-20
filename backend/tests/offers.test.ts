@@ -123,3 +123,62 @@ describe("GET /offers : visibilité selon le profil", () => {
     );
   });
 });
+
+describe("GET /offers : recherche par mot-clé", () => {
+  it("cherche une expression dans le titre sans tenir compte de la casse", async () => {
+    const response = await listOffersAs("ADMIN", ADMINISTRATOR.ANNE_LECLERCQ).query({
+      q: "  API REST  ",
+    });
+
+    expect(response.status).toBe(200);
+    expect(offerIds(response.body)).toEqual([OFFER.BILLING_API]);
+  });
+
+  it("recherche l'expression entière saisie", async () => {
+    const response = await listOffersAs("ADMIN", ADMINISTRATOR.ANNE_LECLERCQ).query({
+      q: "qualité des données",
+    });
+
+    expect(response.status).toBe(200);
+    expect(offerIds(response.body)).toEqual([OFFER.DATA_QUALITY]);
+  });
+
+  it("combine la recherche avec la période", async () => {
+    const response = await listOffersAs("STUDENT", STUDENT.LUCAS_DUPONT).query({
+      q: "application",
+      period: "P2",
+    });
+
+    expect(response.status).toBe(200);
+    expect(offerIds(response.body)).toEqual([OFFER.FLEET_APP]);
+  });
+
+  it("conserve la visibilité étudiant et ignore une recherche vide", async () => {
+    const emptySearch = await listOffersAs("STUDENT", STUDENT.LUCAS_DUPONT).query({ q: "   " });
+    const noMatch = await listOffersAs("STUDENT", STUDENT.LUCAS_DUPONT).query({
+      q: "rapport pdf",
+    });
+
+    expect(emptySearch.status).toBe(200);
+    expect(emptySearch.body).toHaveLength(4);
+    expect(emptySearch.body.every((offer: { status: string }) => offer.status === "PUBLISHED")).toBe(
+      true,
+    );
+    expect(noMatch.status).toBe(200);
+    expect(noMatch.body).toEqual([]);
+  });
+
+  it("empêche un étudiant de trouver une offre non publiée", async () => {
+    const adminSearch = await listOffersAs("ADMIN", ADMINISTRATOR.ANNE_LECLERCQ).query({
+      q: "portail client",
+    });
+    const studentSearch = await listOffersAs("STUDENT", STUDENT.LUCAS_DUPONT).query({
+      q: "portail client",
+    });
+
+    expect(adminSearch.status).toBe(200);
+    expect(offerIds(adminSearch.body)).toEqual([OFFER.CLIENT_PORTAL]);
+    expect(studentSearch.status).toBe(200);
+    expect(studentSearch.body).toEqual([]);
+  });
+});

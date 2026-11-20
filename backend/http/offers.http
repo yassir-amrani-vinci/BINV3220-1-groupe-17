@@ -38,6 +38,10 @@ Authorization: {{admin.response.body.token}}
 GET http://localhost:3000/offers
 Authorization: {{student.response.body.token}}
 
+### Recherche dans les titres, combinée à une période
+GET http://localhost:3000/offers?period=P2&q=application
+Authorization: {{student.response.body.token}}
+
 ### Offres vues par le déposant
 GET http://localhost:3000/offers
 Authorization: {{depositor.response.body.token}}

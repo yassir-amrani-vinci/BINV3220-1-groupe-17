@@ -88,6 +88,24 @@ describe("POST /applications/:id/withdraw", () => {
     expect(response.body.status).toBe("WITHDRAWN");
   });
 
+  it("refuse qu'un étudiant retire la candidature d'un autre étudiant sans la modifier", async () => {
+    const response = await request(app)
+      .post("/applications/1/withdraw")
+      .set("Authorization", studentToken(STUDENT.MATEUSZ_KOWALSKI));
+
+    expect(response.status).toBe(404);
+    expect(response.body.error.code).toBe("NOT_FOUND");
+
+    const ownerApplications = await request(app)
+      .get("/applications")
+      .set("Authorization", studentToken(STUDENT.LUCAS_DUPONT));
+
+    expect(ownerApplications.status).toBe(200);
+    expect(ownerApplications.body.find((application: { id: number }) => application.id === 1)).toMatchObject({
+      status: "IN_PROGRESS",
+    });
+  });
+
   it("refuse le retrait d'une candidature traitée", async () => {
     const response = await request(app)
       .post("/applications/3/withdraw")

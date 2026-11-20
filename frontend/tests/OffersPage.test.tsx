@@ -84,4 +84,57 @@ describe("OffersPage", () => {
 
     await waitFor(() => expect(onUnauthorized).toHaveBeenCalled());
   });
+
+  it("affiche un état vide adapté à une recherche sans correspondance", async () => {
+    stubFetch({ "/api/offers": () => Response.json([]) });
+
+    render(<OffersPage user={studentUser} token="jeton" onUnauthorized={vi.fn()} />);
+
+    fireEvent.change(await screen.findByLabelText("Rechercher par mot-clé"), {
+      target: { value: "aucune offre" },
+    });
+
+    expect(
+      await screen.findByText("Aucune offre ne correspond à la recherche."),
+    ).toBeInTheDocument();
+  });
+
+  it("transmet la recherche saisie sans les espaces autour", async () => {
+    const fetchMock = stubFetch({ "/api/offers": () => Response.json(offers) });
+
+    render(<OffersPage user={contactUser} token="jeton" onUnauthorized={vi.fn()} />);
+    await screen.findByText("Refonte du portail client");
+
+    fireEvent.change(screen.getByLabelText("Rechercher par mot-clé"), {
+      target: { value: "  portail client  " },
+    });
+
+    await waitFor(() =>
+      expect(fetchMock).toHaveBeenLastCalledWith(
+        "/api/offers?q=portail%20client",
+        expect.objectContaining({ headers: { Authorization: "jeton" } }),
+      ),
+    );
+  });
+
+  it("combine la recherche avec la période choisie", async () => {
+    const fetchMock = stubFetch({ "/api/offers": () => Response.json(offers) });
+
+    render(<OffersPage user={contactUser} token="jeton" onUnauthorized={vi.fn()} />);
+    await screen.findByText("Refonte du portail client");
+
+    fireEvent.change(screen.getByLabelText("Filtrer par période"), {
+      target: { value: "P2" },
+    });
+    fireEvent.change(screen.getByLabelText("Rechercher par mot-clé"), {
+      target: { value: "portail" },
+    });
+
+    await waitFor(() =>
+      expect(fetchMock).toHaveBeenLastCalledWith(
+        "/api/offers?period=P2&q=portail",
+        expect.objectContaining({ headers: { Authorization: "jeton" } }),
+      ),
+    );
+  });
 });
