@@ -170,9 +170,15 @@ récente à la plus ancienne, puis de la plus récente à la plus ancienne.
 `period` vaut `P1`, `P2` ou `OTHER`. `status` vaut `SUBMITTED` (soumise), `PENDING`
 (en attente), `PUBLISHED` (publiée), `ASSIGNED` (attribuée) ou `ARCHIVED` (archivée).
 
+Le paramètre facultatif `q` limite les résultats aux offres dont le titre contient le
+texte saisi, sans distinguer les majuscules et minuscules. Les espaces au début et à la fin
+sont ignorés ; plusieurs mots constituent une expression entière. Il peut être combiné avec
+`period`. Une valeur vide ou composée uniquement d'espaces ignore la recherche.
+
 - `401` `UNAUTHENTICATED` : session absente ou invalide.
 - `403` `FORBIDDEN` : contact seulement promoteur ou signataire.
-- `400` `INVALID_QUERY` : `period` est répété ou ne vaut pas `P1`, `P2` ou `OTHER`.
+- `400` `INVALID_QUERY` : `period` est répété ou ne vaut pas `P1`, `P2` ou `OTHER`;
+  `q` est répété ou dépasse 100 caractères.
 
 ## GET /applications
 
