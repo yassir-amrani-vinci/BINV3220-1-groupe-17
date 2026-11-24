@@ -35,11 +35,14 @@ appelés avec des requêtes HTTP JSON-RPC depuis cette session :
 Le serveur MCP a ensuite été arrêté. Les observations ci-dessus décrivent les retours réellement
 renvoyés par les outils, pas seulement une conclusion de l’agent.
 
-**Limite de démonstration :** les outils MCP du serveur ont été réellement appelés, mais pas
-depuis l'interface Copilot de VS Code. La connexion Playwright MCP à une session Agent de VS Code
-n'a donc pas été vérifiée. Pour démontrer explicitement ce parcours pédagogique, il faut ouvrir
-le projet dans VS Code, lancer le serveur, confirmer que `playwright` est disponible dans Chat,
-puis exécuter un scénario dans cette session.
+Une vérification complémentaire a ensuite été réalisée depuis Copilot Agent dans VS Code :
+la conversation fournie montre la lecture du scénario, la navigation dans l'application,
+la connexion comme Lucas et l'ouverture d'**Offres** avec les outils Playwright MCP. Une
+première tentative de saisie a expiré ; après reprise sur le champ observé, la recherche
+`api rest` a affiché uniquement **API REST de facturation**. Aucun test automatisé ni
+changement de fichier n'a été effectué pendant cette exécution. Le déroulement est résumé
+dans [`docs/semaine-5/conversation-2.md`](semaine-5/conversation-2.md). Cette trace est
+rédigée à partir de la conversation fournie ; ce n'est pas un export brut **Copy All**.
 
 ## Playwright Test
 
@@ -105,8 +108,9 @@ séance.
 
 ## Conversations et remise
 
-Une trace limitée au travail de la séance est enregistrée dans
-[`docs/semaine-5/conversation-1.md`](semaine-5/conversation-1.md). Elle n’inclut pas les
-anciennes semaines et est explicitement identifiée comme résumé, pas comme export brut
-**Copy All**. Si l'enseignant exige l'export original, il faudra utiliser une conversation
-Copilot distincte pour cette séance ou fournir l'export propre à celle-ci.
+Les traces limitées au travail des séances sont enregistrées dans
+[`docs/semaine-5/conversation-1.md`](semaine-5/conversation-1.md) et
+[`docs/semaine-5/conversation-2.md`](semaine-5/conversation-2.md). Elles excluent
+l'historique des semaines précédentes et sont identifiées comme résumés, pas comme exports
+bruts **Copy All**. Si l'enseignant exige un export original, il faudra fournir l'export
+propre à la séance depuis VS Code.
