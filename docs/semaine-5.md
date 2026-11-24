@@ -98,6 +98,8 @@ séance.
 
 ## Conversations et remise
 
-Les conversations Copilot de la séance doivent être exportées en Markdown dans
-`docs/semaine-5/` avant la PR. L’export fidèle **Copy All** reste à ajouter si le fichier n’est
-pas encore présent.
+Une trace limitée au travail de la séance est enregistrée dans
+[`docs/semaine-5/conversation-1.md`](semaine-5/conversation-1.md). Elle n’inclut pas les
+anciennes semaines et est explicitement identifiée comme résumé, pas comme export brut
+**Copy All**. Si l'enseignant exige l'export original, il faudra utiliser une conversation
+Copilot distincte pour cette séance ou fournir l'export propre à celle-ci.
