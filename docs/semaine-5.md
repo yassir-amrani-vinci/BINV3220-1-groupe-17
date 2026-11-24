@@ -40,9 +40,9 @@ la conversation fournie montre la lecture du scénario, la navigation dans l'app
 la connexion comme Lucas et l'ouverture d'**Offres** avec les outils Playwright MCP. Une
 première tentative de saisie a expiré ; après reprise sur le champ observé, la recherche
 `api rest` a affiché uniquement **API REST de facturation**. Aucun test automatisé ni
-changement de fichier n'a été effectué pendant cette exécution. Le déroulement est résumé
-dans [`docs/semaine-5/conversation-2.md`](semaine-5/conversation-2.md). Cette trace est
-rédigée à partir de la conversation fournie ; ce n'est pas un export brut **Copy All**.
+changement de fichier n'a été effectué pendant cette exécution. La conversation fournie
+pour ce parcours est reproduite dans
+[`docs/semaine-5/conversation-2.md`](semaine-5/conversation-2.md).
 
 ## Playwright Test
 
@@ -108,9 +108,8 @@ séance.
 
 ## Conversations et remise
 
-Les traces limitées au travail des séances sont enregistrées dans
+Les documents de conversation limités au travail des séances sont enregistrés dans
 [`docs/semaine-5/conversation-1.md`](semaine-5/conversation-1.md) et
-[`docs/semaine-5/conversation-2.md`](semaine-5/conversation-2.md). Elles excluent
-l'historique des semaines précédentes et sont identifiées comme résumés, pas comme exports
-bruts **Copy All**. Si l'enseignant exige un export original, il faudra fournir l'export
-propre à la séance depuis VS Code.
+[`docs/semaine-5/conversation-2.md`](semaine-5/conversation-2.md). Le premier est un résumé
+de la séance initiale ; le second reproduit la conversation fournie sur l'exécution dans VS
+Code. Ils n'incluent pas l'historique des semaines précédentes.
