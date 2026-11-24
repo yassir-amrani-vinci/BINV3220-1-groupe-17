@@ -42,7 +42,9 @@ Appels et observations réellement retournés :
   « Aucune offre ne correspond à la recherche. » sans tableau.
 
 Le serveur MCP a été arrêté après ces essais. L'application n'a pas été modifiée pendant
-son pilotage.
+son pilotage. Les appels au protocole ont été émis par HTTP JSON-RPC depuis cette session,
+pas depuis les outils intégrés au Chat Agent de VS Code ; cette intégration reste à vérifier
+pour démontrer complètement le parcours demandé par le cours.
 
 ## Tests Playwright Test
 

@@ -21,7 +21,8 @@ Le serveur MCP local a été lancé avec
 [`.mcp.json`](../.mcp.json). Le backend et le frontend tournaient sur `localhost:3000` et
 `localhost:5173`.
 
-Les deux scénarios ont été exécutés dans le navigateur par les outils du serveur MCP :
+Les deux scénarios ont été exécutés dans le navigateur par les outils du serveur MCP,
+appelés avec des requêtes HTTP JSON-RPC depuis cette session :
 
 - **Scénario 1 — conforme.** `browser_navigate` a ouvert `http://localhost:5173` et a renvoyé
   l’URL ainsi que le titre « Gesta ». `browser_snapshot` a exposé l’écran de connexion et les
@@ -33,6 +34,12 @@ Les deux scénarios ont été exécutés dans le navigateur par les outils du se
 
 Le serveur MCP a ensuite été arrêté. Les observations ci-dessus décrivent les retours réellement
 renvoyés par les outils, pas seulement une conclusion de l’agent.
+
+**Limite de démonstration :** les outils MCP du serveur ont été réellement appelés, mais pas
+depuis l'interface Copilot de VS Code. La connexion Playwright MCP à une session Agent de VS Code
+n'a donc pas été vérifiée. Pour démontrer explicitement ce parcours pédagogique, il faut ouvrir
+le projet dans VS Code, lancer le serveur, confirmer que `playwright` est disponible dans Chat,
+puis exécuter un scénario dans cette session.
 
 ## Playwright Test
 
