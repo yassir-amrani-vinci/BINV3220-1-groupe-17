@@ -110,6 +110,10 @@ séance.
 
 Les documents de conversation limités au travail des séances sont enregistrés dans
 [`docs/semaine-5/conversation-1.md`](semaine-5/conversation-1.md) et
-[`docs/semaine-5/conversation-2.md`](semaine-5/conversation-2.md). Le premier est un résumé
-de la séance initiale ; le second reproduit la conversation fournie sur l'exécution dans VS
-Code. Ils n'incluent pas l'historique des semaines précédentes.
+[`docs/semaine-5/conversation-2.md`](semaine-5/conversation-2.md). Ils reproduisent les textes
+de conversation fournis pour la séance initiale puis pour l'exécution dans VS Code, sans
+inclure l'historique des semaines précédentes.
+
+Le bilan réflexif requis pour cette séance est dans
+[`docs/semaine-5/bilan.md`](semaine-5/bilan.md). Le bilan général du projet est dans
+[`docs/bilan-global.md`](bilan-global.md).
